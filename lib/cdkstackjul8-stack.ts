@@ -4,7 +4,7 @@ import * as cdk from 'aws-cdk-lib';
 // import * as s3 from 'aws-cdk-lib/aws-s3';
 // use as new s3.CfnBucket()
 
-import { CfnBucket } from 'aws-cdk-lib/aws-s3';
+import { Bucket, CfnBucket } from 'aws-cdk-lib/aws-s3';
 //use as new CfnBucket()
 
 import { Construct } from 'constructs';
@@ -53,5 +53,10 @@ export class Cdkstackjul8Stack extends cdk.Stack {
       },
     });
 
+    new Bucket(this, "L2Bucket", {
+      lifecycleRules: [{
+        expiration: cdk.Duration.days(2)
+      }]
+    });
   }
 }
