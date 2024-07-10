@@ -59,10 +59,26 @@ export class Cdkstackjul8Stack extends cdk.Stack {
         expiration: cdk.Duration.days(2)
       }]
     });
+
+    new S3WithDestroy(this, "L3Bucket")
   }
 
   //created the stack without this removal policy
   // coded the removal policy
   // cdk destroy
 
+}
+
+class S3WithDestroy extends Construct {
+  constructor(scope: Construct, id: string) {
+    super(scope, id);
+        new Bucket(this, id, {
+          removalPolicy: cdk.RemovalPolicy.DESTROY,
+          lifecycleRules: [
+            {
+              expiration: cdk.Duration.days(2),
+            },
+          ],
+        });
+  }
 }
