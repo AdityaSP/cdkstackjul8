@@ -14,7 +14,7 @@ export class Cdkstackjul8Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
     
-    // Create a rule property
+    // By creating property objects 
     let rp: CfnBucket.RuleProperty = {
       status: "Enabled",
       expirationInDays: 3,
@@ -25,6 +25,33 @@ export class Cdkstackjul8Stack extends cdk.Stack {
     let prop: cdk.aws_s3.CfnBucketProps = {
       lifecycleConfiguration:lcp
     };
-    new CfnBucket(this, "mys3jul8",prop);
+
+    new CfnBucket(this, "mys3jul81", prop);
+
+    // composing the CfnBucketProps without creating other objects
+    let prop1: cdk.aws_s3.CfnBucketProps = {
+      lifecycleConfiguration: {
+        rules: [
+          {
+            status: "Enabled",
+            expirationInDays: 3,
+          }
+        ],
+      },
+    };
+    new CfnBucket(this, "mys3jul82",prop1);
+
+    // creating the props object on the fly
+    new CfnBucket(this, "mys3jul8", {
+      lifecycleConfiguration: {
+        rules: [
+          {
+            status: "Enabled",
+            expirationInDays: 3,
+          },
+        ],
+      },
+    });
+
   }
 }
