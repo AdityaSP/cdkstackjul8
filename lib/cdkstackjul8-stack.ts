@@ -13,6 +13,18 @@ import { Construct } from 'constructs';
 export class Cdkstackjul8Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
-    new CfnBucket(this, "mys3jul8")
+    
+    // Create a rule property
+    let rp: CfnBucket.RuleProperty = {
+      status: "Enabled",
+      expirationInDays: 3,
+    };
+    let lcp: CfnBucket.LifecycleConfigurationProperty = {
+      rules: [rp]
+    }
+    let prop: cdk.aws_s3.CfnBucketProps = {
+      lifecycleConfiguration:lcp
+    };
+    new CfnBucket(this, "mys3jul8",prop);
   }
 }
