@@ -54,9 +54,15 @@ export class Cdkstackjul8Stack extends cdk.Stack {
     });
 
     new Bucket(this, "L2Bucket", {
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
       lifecycleRules: [{
         expiration: cdk.Duration.days(2)
       }]
     });
   }
+
+  //created the stack without this removal policy
+  // coded the removal policy
+  // cdk destroy
+
 }
