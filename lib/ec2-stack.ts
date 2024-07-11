@@ -1,5 +1,5 @@
 import * as cdk from "aws-cdk-lib";
-import { Vpc } from "aws-cdk-lib/aws-ec2";
+import { AmazonLinuxImage, Instance, InstanceClass, InstanceSize, InstanceType, KeyPair, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Construct } from "constructs";
 
 export class Ec2Stack extends cdk.Stack {
@@ -10,8 +10,25 @@ export class Ec2Stack extends cdk.Stack {
         isDefault: true
     })
 
-    new cdk.CfnOutput(this, 'vpcid', {
-        value: defaultvpc.vpcId
+    let insType = InstanceType.of(InstanceClass.T2, InstanceSize.MICRO)
+
+    let img = new AmazonLinuxImage()
+
+    let kp = KeyPair.fromKeyPairName(this,'getkeypair', "Aditya-personal")
+
+    let ec2instance = new Instance(this, 'myec2', {
+        vpc: defaultvpc,
+        instanceType: insType,
+        machineImage: img,
+        keyPair: kp
     })
+    
+    console.log("Instance Id is", ec2instance.instanceId)
+
+    new cdk.CfnOutput(this, 'ec2instance', {
+        value: ec2instance.instanceId
+    })
+
+
   }
 }
