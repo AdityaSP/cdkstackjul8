@@ -19,11 +19,9 @@ export class SecondStack extends cdk.Stack {
     //   autoDeleteObjects: true
     // });
 
-    let b = s3.Bucket.fromBucketName(
-      this,
-      "getbucket",
-      "cdkstackjul8stackadi-nonameceb8876c-jj5jwlo7zgfw"
-    );
+    let bname = cdk.Fn.importValue("bucketnameoutput");
+
+    let b = s3.Bucket.fromBucketName(this, "getbucket", bname);
 
     new s3dep.BucketDeployment(this, "deploycode", {
       destinationBucket: b,

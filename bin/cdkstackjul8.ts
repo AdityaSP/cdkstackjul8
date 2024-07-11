@@ -10,5 +10,6 @@ import { SecondStack } from '../lib/cdkstackjul8-2-stack';
 //cdk deploy --all
 
 const app = new cdk.App();
-new Cdkstackjul8Stack(app, 'Cdkstackjul8Stackadi', {});
-new SecondStack(app, "Cdkstackjul8Stackadi2", {});
+let s1 = new Cdkstackjul8Stack(app, 'Cdkstackjul8Stackadi', {});
+let s2 = new SecondStack(app, "Cdkstackjul8Stackadi2", {});
+s2.addDependency(s1);
