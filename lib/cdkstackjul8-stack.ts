@@ -36,8 +36,13 @@ export class Cdkstackjul8Stack extends cdk.Stack {
       ],
     });
 
+    let nnb = new Bucket(this, "noname", {
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
 
-    
+    new cdk.CfnOutput(this, 'bucketnameoutput',{
+      value: nnb.bucketName
+    })
     // Command to use parameters
     //cdk deploy --parameters duration=4 --parameters bucketname="s3fromparamarg"
   }
