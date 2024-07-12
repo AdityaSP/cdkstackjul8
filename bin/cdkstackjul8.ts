@@ -3,6 +3,7 @@ import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { Ec2Stack } from '../lib/ec2-stack';
 import { AlertS3Object } from '../lib/alert';
+import { StackL3Package } from '../lib/stackl3package';
 // import { Cdkstackjul8Stack } from '../lib/cdkstackjul8-stack';
 // import { SecondStack } from '../lib/cdkstackjul8-2-stack';
 
@@ -36,10 +37,16 @@ const app = new cdk.App();
 //   },
 // });
 
-new AlertS3Object(app, "alerts3adi", {
+// new AlertS3Object(app, "alerts3adi", {
+//   env: {
+//     account: process.env.CDK_DEFAULT_ACCOUNT,
+//     region: process.env.CDK_DEFAULT_REGION,
+//   },
+// });
+
+new StackL3Package(app, "alerts3adifrompkg", {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
 });
-
