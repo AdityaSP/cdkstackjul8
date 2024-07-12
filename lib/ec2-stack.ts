@@ -1,5 +1,5 @@
 import * as cdk from "aws-cdk-lib";
-import { AmazonLinuxImage, Instance, InstanceClass, InstanceSize, InstanceType, KeyPair, Vpc } from "aws-cdk-lib/aws-ec2";
+import { AmazonLinuxImage, Instance, InstanceClass, InstanceSize, InstanceType, KeyPair, MachineImage, Vpc } from "aws-cdk-lib/aws-ec2";
 import { Construct } from "constructs";
 
 export class Ec2Stack extends cdk.Stack {
@@ -13,6 +13,7 @@ export class Ec2Stack extends cdk.Stack {
     let insType = InstanceType.of(InstanceClass.T2, InstanceSize.MICRO)
 
     let img = new AmazonLinuxImage()
+    let img2 = MachineImage.latestAmazonLinux2()
 
     let kp = KeyPair.fromKeyPairName(this,'getkeypair', "Aditya-personal")
 
