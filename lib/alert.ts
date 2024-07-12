@@ -1,6 +1,8 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { PolicyDocument, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Code, Function, Runtime } from "aws-cdk-lib/aws-lambda";
+import { Bucket, EventType } from "aws-cdk-lib/aws-s3";
+import { LambdaDestination } from "aws-cdk-lib/aws-s3-notifications";
 import { Topic } from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
 import { Construct } from "constructs";
@@ -30,6 +32,16 @@ export class AlertS3Object extends Stack {
     })
 
     lam.addToRolePolicy(publishpolicy);
+
+    let s3b = new Bucket(this, 'mybucket', {
+        removalPolicy: RemovalPolicy.DESTROY,
+        autoDeleteObjects: true
+    })
+
+    s3b.addEventNotification(
+      EventType.OBJECT_CREATED,
+      new LambdaDestination(lam)
+    );
 
   }
 }
