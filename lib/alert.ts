@@ -3,6 +3,7 @@ import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Bucket, EventType } from "aws-cdk-lib/aws-s3";
 import { LambdaDestination } from "aws-cdk-lib/aws-s3-notifications";
 import { Construct } from "constructs";
+import { S3withAlertL3 } from "./s3withalert";
 
 export class AlertS3Object extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -30,18 +31,22 @@ export class AlertS3Object extends Stack {
 
     // lam.addToRolePolicy(publishpolicy);
 
-    let s3b = new Bucket(this, 'mybucket', {
-        removalPolicy: RemovalPolicy.DESTROY,
-        autoDeleteObjects: true
-    })
+    // Iteration 3 moved s3 and event trigger to a new L3 construct
+    // let s3b = new Bucket(this, 'mybucket', {
+    //     removalPolicy: RemovalPolicy.DESTROY,
+    //     autoDeleteObjects: true
+    // })
 
-    let lamname = Fn.importValue("alertlambdaadi");
+    // let lamname = Fn.importValue("alertlambdaadi");
 
-    let lam = lambda.Function.fromFunctionName(this, 'getfunction', lamname)
-    s3b.addEventNotification(
-      EventType.OBJECT_CREATED,
-      new LambdaDestination(lam)
-    );
+    // let lam = lambda.Function.fromFunctionName(this, 'getfunction', lamname)
+    // s3b.addEventNotification(
+    //   EventType.OBJECT_CREATED,
+    //   new LambdaDestination(lam)
+    // );
+
+    new S3withAlertL3(this, 'bucketfroml3');
 
   }
 }
+
